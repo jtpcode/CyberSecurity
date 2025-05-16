@@ -1,4 +1,5 @@
 **KORJAA LINKIT OIKEILLE RIVEILLE LOPUKSI**
+**OTA KUVAKAAPPAUKSET**
 
 In this project we used OWASP Top Ten Web Application Security Risks in 2017 to demonstrate five different security risks and their fixes in simple guestbook web application. The chosen risks are Cross site scripting (XSS), SQL-injection, Broken access control, Sensitive data exposure and CSRF.
 
@@ -19,7 +20,8 @@ Python version used in the project is 3.13.1
 Here are the flaws with descriptions, links and fixes:
 
 FLAW 1:
-Link: https://github.com/jtpcode/CyberSecurity/blob/ac32483614439bb9e85274e9dbcc2c84a72d0b29/guestbook/views.py#L11
+Link: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L16
+
 Description of flaw 1:
 For some reason the developer has created a for loop for marking all the messages as safe, so messages can include for example javascript which is executed when the guestbook main page is loaded.
 
@@ -27,9 +29,12 @@ How to fix it:
 Remove the for-loop completely, so messages aren't marked as safe.
 
 FLAW 2:
-exact source link pinpointing flaw 2...
-description of flaw 2...
-how to fix it...
+LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L10
+
+Description of flaw 2:
+Developer has left "filter(is_public=True)" out, so also private messages are visible to everyone.
+
+How to fix it: include "filter(is_public=True)", so messages are filtered according to privacy.
 
 ...
 
