@@ -1,0 +1,11 @@
+<h1>Guestbook</h1>
+
+<a href="{% url 'submit_message' %}">Leave a message</a>
+
+<ul>
+  {% for msg in messages %}
+    <li><strong>{{ msg.name }}</strong>: {{ msg.content|linebreaks }}</li>
+  {% empty %}
+    <li>No messages.</li>
+  {% endfor %}
+</ul>
