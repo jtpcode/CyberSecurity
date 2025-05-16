@@ -5,7 +5,13 @@
   <label>Name: <input type="text" name="name"></label><br>
   <label>email: <input type="email" name="email"></label><br>
   <label>Message:<br><textarea name="content"></textarea></label><br>
+
+  <label>
+    <input type="checkbox" name="is_private">
+      Private message
+    </label><br>
+
   <button type="submit">Send</button>
 </form>
 
-<a href="{% url 'index' %}">Main page</a>
+<a href="{% url 'index' %}">Front page</a>
