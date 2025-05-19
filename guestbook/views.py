@@ -7,10 +7,10 @@ from django.utils.safestring import mark_safe
 
 
 def index(request):
-    # 2.   Broken access control -vulnerability:
+    # 2. Broken access control -vulnerability:
     messages = Message.objects.order_by("-created_at")
     # FIX for Broken access control: replace the above line with the line below,
-    # so messages are filtered according to privacy
+    # so messages are filtered according to privacy.
     # messages = Message.objects.filter(is_public=True).order_by("-created_at")
 
     # 1. Cross Site Script (XSS) -vulnerability:

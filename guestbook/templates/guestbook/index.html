@@ -4,7 +4,11 @@
 
 <ul>
   {% for msg in messages %}
-    <li><strong>{{ msg.name }}</strong>: {{ msg.content|linebreaks }}</li>
+    <!-- 3. Sensitive Data Exposure -vulnerability: -->
+    <li><strong>{{ msg.name }}</strong> (<em>{{ msg.email }}</em>): {{ msg.content|linebreaks }}</li>
+    <!-- FIX for Sensitive Data Exposure: leave out "msg.email" from the line above in order to
+    not show the email address of the sender. Below is the correct line: -->
+    <!-- <strong>{{ msg.name }}</strong>: {{ msg.content|linebreaks }} -->
   {% empty %}
     <li>No messages.</li>
   {% endfor %}

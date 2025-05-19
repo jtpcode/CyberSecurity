@@ -25,23 +25,36 @@ Link: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L16
 Description of flaw 1:
 For some reason the developer has created a for loop for marking all the messages as safe, so messages can include for example javascript which is executed when the guestbook main page is loaded. You can see a simple javascript example with unwanted pop up window in the picture following this link:
 
-![Flaw 1 before](.\screenshots\flaw-1-before-1.png)
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-1-before-1.png
 
 
 How to fix it:
 Remove the for-loop completely, so messages aren't marked as safe. In the picture (follow the link below) you can see the pop up doesn't appear and you can actually see the javascrip code in plain text:
 
-![Flaw 1 before](.\screenshots\flaw-1-after-1.png)
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-1-after-1.png
 
 FLAW 2:
 LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L10
 
 Description of flaw 2:
-Developer has left "filter(is_public=True)" out, so also private messages are visible to everyone.
+When fetching the messages, the developer has left out privacy filtering "filter(is_public=True)", so also private messages are visible to everyone. You can see the message from "aapeli" which is marked as private in the database, see the picture following the link below:
 
-How to fix it: include "filter(is_public=True)", so messages are filtered according to privacy.
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-2-before-1.png
 
-...
+How to fix it:
+include "filter(is_public=True)" in the code line, so messages are filtered according to privacy options. To see the effect, follow the link below:
+
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-2-after-1.png
+
+FLAW 3:
+exact source link pinpointing flaw 5...
+description of flaw 5...
+how to fix it...
+
+FLAW 5:
+exact source link pinpointing flaw 5...
+description of flaw 5...
+how to fix it...
 
 FLAW 5:
 exact source link pinpointing flaw 5...
