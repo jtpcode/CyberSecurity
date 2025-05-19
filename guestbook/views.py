@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from .models import Message
 
 from django.utils.safestring import mark_safe
@@ -22,6 +23,7 @@ def index(request):
     return render(request, "guestbook/index.html", {"messages": messages})
 
 
+# @csrf_exempt
 def submit_message(request):
     if request.method == "POST":
         name = request.POST.get("name")

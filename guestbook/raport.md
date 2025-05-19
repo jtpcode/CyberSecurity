@@ -20,7 +20,7 @@ Python version used in the project is 3.13.1
 Here are the flaws with descriptions, links and fixes:
 
 FLAW 1:
-Link: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L16
+LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L16
 
 Description of flaw 1:
 For some reason the developer has created a for loop for marking all the messages as safe, so messages can include for example javascript which is executed when the guestbook main page is loaded. You can see a simple javascript example with unwanted pop up window in the picture following this link:
@@ -47,13 +47,21 @@ include "filter(is_public=True)" in the code line, so messages are filtered acco
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-2-after-1.png
 
 FLAW 3:
-exact source link pinpointing flaw 5...
-description of flaw 5...
-how to fix it...
+LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/templates/guestbook/index.html#L7
 
-FLAW 5:
-exact source link pinpointing flaw 5...
-description of flaw 5...
+Description of flaw 3:
+When messages have been fetched from the database and passed on to "index.html", the message data is not properly handled since the current code shows the email address of the sender in the guestbook main view. You can see the result in the picture following the link below:
+
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-3-before-1.png
+
+How to fix it:
+You must leave out the "msg.email" part from the code in order to not show the email address of the sender to everyone visiting the guestbook. You can see the result in the picture following the link below:
+
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-3-after-1.png
+
+FLAW 4:
+exact source link pinpointing flaw 4...
+description of flaw 4...
 how to fix it...
 
 FLAW 5:
