@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from .models import Message
 
 from django.utils.safestring import mark_safe
@@ -7,6 +9,7 @@ from django.utils.safestring import mark_safe
 # Create your views here.
 
 
+@login_required
 def index(request):
     # FLAW 2: Broken access control -vulnerability.
     messages = Message.objects.order_by("-created_at")
@@ -27,6 +30,7 @@ def index(request):
 # FLAW 4: CSRF -vulnerability.
 # FIX for CSRF -vulnerability: remove the above "@csrf_exempt" AND ALSO
 # add "{% csrf_token %}" in "submit.html" file.
+@login_required
 def submit_message(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -39,3 +43,9 @@ def submit_message(request):
 
         return redirect("index")
     return render(request, "guestbook/submit.html")
+
+
+def logout_view(request):
+    logout(request)
+
+    return redirect("index")

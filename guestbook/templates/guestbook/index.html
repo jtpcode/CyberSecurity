@@ -2,6 +2,11 @@
 
 <a href="{% url 'submit_message' %}">Leave a message</a>
 
+<form action='logout/' method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Logout"/>
+</form>
+
 <ul>
   {% for msg in messages %}
     <!-- FLAW 3: Sensitive Data Exposure -vulnerability. -->

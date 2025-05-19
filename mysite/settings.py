@@ -69,6 +69,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/guestbook'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
