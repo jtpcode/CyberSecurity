@@ -8,13 +8,13 @@ from django.utils.safestring import mark_safe
 
 
 def index(request):
-    # 2. Broken access control -vulnerability:
+    # FLAW 2: Broken access control -vulnerability.
     messages = Message.objects.order_by("-created_at")
     # FIX for Broken access control: replace the above line with the line below,
     # so messages are filtered according to privacy.
     # messages = Message.objects.filter(is_public=True).order_by("-created_at")
 
-    # 1. Cross Site Script (XSS) -vulnerability:
+    # FLAW 1: Cross Site Script (XSS) -vulnerability.
     for msg in messages:
         msg.content = mark_safe(msg.content)
     # FIX for XSS: remove the for-loop completely, so messages aren't marked
@@ -23,7 +23,10 @@ def index(request):
     return render(request, "guestbook/index.html", {"messages": messages})
 
 
-# @csrf_exempt
+@csrf_exempt
+# FLAW 4: CSRF -vulnerability.
+# FIX for CSRF -vulnerability: remove the above "@csrf_exempt" AND ALSO
+# add "{% csrf_token %}" in "submit.html" file.
 def submit_message(request):
     if request.method == "POST":
         name = request.POST.get("name")
