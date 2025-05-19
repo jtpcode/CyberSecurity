@@ -60,9 +60,22 @@ You must leave out the "msg.email" part from the code in order to not show the e
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-3-after-1.png
 
 FLAW 4:
-exact source link pinpointing flaw 4...
-description of flaw 4...
-how to fix it...
+LINKS:
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L27
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/templates/guestbook/submit.html#L4
+
+Description of flaw 4:
+A @csrf_exempt decorator is used in "views.py" for method submit_message(request). Also "csrf_token" has not been added to the related "submit.html" page. This allows an attacker to send a message from another page/location to the guestbook without problems. You can find the "attack page" used in this example here:
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/attack_page/csrf_attack.html
+
+See the attacker's message in the picture following the link below:
+
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-4-before-1.png
+
+How to fix it:
+Remove the @csrf_exempt decorator from "views.py" AND ALSO add "{% csrf_token %}" in "submit.html" file, at the beginning of the form. By following the link below, you can see the result when "attack page" (see Description of flaw 4) is tried to access again:
+
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-4-after-1.png
 
 FLAW 5:
 exact source link pinpointing flaw 5...
