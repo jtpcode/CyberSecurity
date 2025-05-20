@@ -32,7 +32,6 @@ For some reason the developer has created a for loop for marking all the message
 
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-1-before-1.png
 
-
 How to fix it:
 Remove the for-loop completely, so messages aren't marked as safe. In the picture (follow the link below) you can see the pop up doesn't appear and you can actually see the javascrip code in plain text in the message queue:
 
