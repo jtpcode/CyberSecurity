@@ -27,14 +27,14 @@ def index(request):
 
 
 # FLAW 4: CSRF -vulnerability.
-# FIX for CSRF -vulnerability: remove the "@csrf_exempt" below AND ALSO
-# add "{% csrf_token %}" in "submit.html" form.
 @csrf_exempt
+# FIX for CSRF -vulnerability: remove the "@csrf_exempt" AND ALSO
+# add "{% csrf_token %}" in "submit.html" form.
 
 # FLAW 5: Broken Authentication -vulnerability.
-# FIX for Broken Authentication -vulnerability: Uncomment "@login_required"
-# decorator below.
 # @login_required
+# FIX for Broken Authentication -vulnerability: Uncomment "@login_required"
+# decorator.
 def submit_message(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -43,7 +43,8 @@ def submit_message(request):
         is_public = not request.POST.get("is_private")
 
         Message.objects.create(
-            name=name, email=email, content=content, is_public=is_public)
+            name=name, email=email, content=content, is_public=is_public
+        )
 
         return redirect("index")
     return render(request, "guestbook/submit.html")

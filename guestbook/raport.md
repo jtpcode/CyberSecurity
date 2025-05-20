@@ -1,6 +1,3 @@
-**KORJAA LINKIT OIKEILLE RIVEILLE LOPUKSI**
-**OTA KUVAKAAPPAUKSET**
-
 In this project we used OWASP Top Ten Web Application Security Risks in 2017 to demonstrate five different security risks and their fixes in simple guestbook web application. The chosen risks are Cross site scripting (XSS), SQL-injection, Broken access control, Sensitive data exposure and CSRF.
 
 LINK: https://github.com/jtpcode/CyberSecurity
@@ -20,7 +17,7 @@ Python version used in the project is 3.13.1
 Here are the flaws with descriptions, links and fixes:
 
 FLAW 1:
-LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L16
+LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L20
 
 Description of flaw 1:
 For some reason the developer has created a for loop for marking all the messages as safe, so messages can include for example javascript which is executed when the guestbook main page is loaded. You can see a simple javascript example with unwanted pop up window in the picture following this link:
@@ -34,7 +31,7 @@ Remove the for-loop completely, so messages aren't marked as safe. In the pictur
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-1-after-1.png
 
 FLAW 2:
-LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L10
+LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L14
 
 Description of flaw 2:
 When fetching the messages, the developer has left out privacy filtering "filter(is_public=True)", so also private messages are visible to everyone. You can see the message from "aapeli" which is marked as private in the database, see the picture following the link below:
@@ -47,7 +44,7 @@ include "filter(is_public=True)" in the code line, so messages are filtered acco
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-2-after-1.png
 
 FLAW 3:
-LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/templates/guestbook/index.html#L7
+LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/templates/guestbook/index.html#L12
 
 Description of flaw 3:
 When messages have been fetched from the database and passed on to "index.html", the message data is not properly handled since the current code shows the email address of the sender in the guestbook main view. You can see the result in the picture following the link below:
@@ -61,7 +58,7 @@ https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-3-
 
 FLAW 4:
 LINKS:
-https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L27
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L29
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/templates/guestbook/submit.html#L4
 
 Description of flaw 4:
@@ -78,6 +75,14 @@ Remove the @csrf_exempt decorator from "views.py" AND ALSO add "{% csrf_token %}
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-4-after-1.png
 
 FLAW 5:
-exact source link pinpointing flaw 5...
-description of flaw 5...
-how to fix it...
+LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L34
+
+Description of flaw 5:
+A @login_required decorator has been left out from method submit_message(request) in "views.py". This allows anyone to access /guestbook/submit/submit.html to send messages without having to login to the site. Follow the link below to see a picture of the situation:
+
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-5-before-1.png
+
+How to fix it:
+Add/uncomment @login_required decorator in the method submit_message(request) in "views.py". This way you have to login to the site before you can send messages. The result can be seen in a picture following the link below:
+
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-5-after-1.png
