@@ -26,11 +26,15 @@ def index(request):
     return render(request, "guestbook/index.html", {"messages": messages})
 
 
-@csrf_exempt
 # FLAW 4: CSRF -vulnerability.
-# FIX for CSRF -vulnerability: remove the above "@csrf_exempt" AND ALSO
-# add "{% csrf_token %}" in "submit.html" file.
-@login_required
+# FIX for CSRF -vulnerability: remove the "@csrf_exempt" below AND ALSO
+# add "{% csrf_token %}" in "submit.html" form.
+@csrf_exempt
+
+# FLAW 5: Broken Authentication -vulnerability.
+# FIX for Broken Authentication -vulnerability: Uncomment "@login_required"
+# decorator below.
+# @login_required
 def submit_message(request):
     if request.method == "POST":
         name = request.POST.get("name")
