@@ -1,4 +1,4 @@
-In this project we used OWASP Top Ten Web Application Security Risks in 2017 to demonstrate five different security risks and their fixes in simple guestbook web application. The chosen risks are Cross site scripting (XSS), SQL-injection, Broken access control, Sensitive data exposure and CSRF.
+In this project we used OWASP Top Ten Web Application Security Risks in 2017 to demonstrate five different security risks and their fixes in simple guestbook web application. The chosen risks are Cross site scripting (XSS), Broken access control, Sensitive data exposure, CSRF and Broken Authentication.
 
 LINK: https://github.com/jtpcode/CyberSecurity
 Installation instructions:
@@ -12,11 +12,17 @@ Installation instructions:
   - $ python manage.py runserver
 - The application is located at http://127.0.0.1:8000/guestbook/
 
-Python version used in the project is 3.13.1
+The Github repo already includes a db.sqlite3 database file for testing purposes with few messages included. There is a user (username/password) in the system you can use:
+- alice/in_wonderland
+
+There is also an admin user (username/password), but that's not necessary for the assignment:
+- admin/hellurei
+
+Python version 3.13.1 was used in the project. 
 
 Here are the flaws with descriptions, links and fixes:
 
-FLAW 1:
+FLAW 1: Cross site scripting (XSS)
 LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L20
 
 Description of flaw 1:
@@ -26,24 +32,26 @@ https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-1-
 
 
 How to fix it:
-Remove the for-loop completely, so messages aren't marked as safe. In the picture (follow the link below) you can see the pop up doesn't appear and you can actually see the javascrip code in plain text:
+Remove the for-loop completely, so messages aren't marked as safe. In the picture (follow the link below) you can see the pop up doesn't appear and you can actually see the javascrip code in plain text in the message queue:
 
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-1-after-1.png
 
-FLAW 2:
+
+FLAW 2: Broken access control
 LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L14
 
 Description of flaw 2:
-When fetching the messages, the developer has left out privacy filtering "filter(is_public=True)", so also private messages are visible to everyone. You can see the message from "aapeli" which is marked as private in the database, see the picture following the link below:
+When fetching the messages, the developer has left out privacy filtering "filter(is_public=True)" in "views.py" method index(request), so also private messages are visible to everyone. You can see the message from "aapeli" which is marked as private in the database, see the picture following the link below:
 
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-2-before-1.png
 
 How to fix it:
-include "filter(is_public=True)" in the code line, so messages are filtered according to privacy options. To see the effect, follow the link below:
+Include "filter(is_public=True)" in the line of code, so messages are filtered according to privacy options. To see the effect, follow the link below:
 
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-2-after-1.png
 
-FLAW 3:
+
+FLAW 3: Sensitive Data Exposure
 LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/templates/guestbook/index.html#L12
 
 Description of flaw 3:
@@ -56,13 +64,14 @@ You must leave out the "msg.email" part from the code in order to not show the e
 
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-3-after-1.png
 
-FLAW 4:
+
+FLAW 4: CSRF
 LINKS:
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L29
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/templates/guestbook/submit.html#L4
 
 Description of flaw 4:
-A @csrf_exempt decorator is used in "views.py" for method submit_message(request). Also "csrf_token" has not been added to the related "submit.html" page. This allows an attacker to send a message from another page/location to the guestbook without problems. You can find the "attack page" used in this example here:
+A @csrf_exempt decorator is used in "views.py" for method submit_message(request). Also "csrf_token" has not been added to the related "submit.html" form. This allows an attacker to send a message from another page/location to the guestbook without problems. You can find the "attack page" used in this example here and also test it yourself:
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/attack_page/csrf_attack.html
 
 See the attacker's message in the picture following the link below:
@@ -70,19 +79,20 @@ See the attacker's message in the picture following the link below:
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-4-before-1.png
 
 How to fix it:
-Remove the @csrf_exempt decorator from "views.py" AND ALSO add "{% csrf_token %}" in "submit.html" file, at the beginning of the form. By following the link below, you can see the result when "attack page" (see Description of flaw 4) is tried to access again:
+Remove the @csrf_exempt decorator from "views.py" AND ALSO add "{% csrf_token %}" in "submit.html" at the beginning of the form. By following the link below, you can see the result when "attack page" (see Description of flaw 4) is tried to execute again:
 
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-4-after-1.png
 
-FLAW 5:
+
+FLAW 5: Broken Authentication
 LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L34
 
 Description of flaw 5:
-A @login_required decorator has been left out from method submit_message(request) in "views.py". This allows anyone to access /guestbook/submit/submit.html to send messages without having to login to the site. Follow the link below to see a picture of the situation:
+A @login_required decorator has been left out from the method submit_message(request) in "views.py". This allows anyone to access /guestbook/submit/submit.html to send messages without having to login to the site. Follow the link below to see a picture of the situation:
 
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-5-before-1.png
 
 How to fix it:
-Add/uncomment @login_required decorator in the method submit_message(request) in "views.py". This way you have to login to the site before you can send messages. The result can be seen in a picture following the link below:
+Add/uncomment the @login_required decorator in the method submit_message(request) in "views.py". This way you have to login to the site before you can send messages. The result can be seen in a picture following the link below:
 
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-5-after-1.png
