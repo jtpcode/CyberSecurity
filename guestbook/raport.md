@@ -99,3 +99,4 @@ How to fix it:
 Remove subprocess.call from the code and preferrably use for example 'print' for debugging inputs. The result can be seen in the picture following the links below, where only valid debug print is seen ("User input from: Mick & rmdir /s /q testdir") and 'testdir' stil exists:
 
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-5-after-1.png
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-5-after-2.png
