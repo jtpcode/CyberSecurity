@@ -1,10 +1,10 @@
+import subprocess
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from .models import Message
-
 from django.utils.safestring import mark_safe
+from .models import Message
 
 # Create your views here.
 
@@ -31,10 +31,7 @@ def index(request):
 # FIX for CSRF -vulnerability: remove the "@csrf_exempt" AND ALSO
 # add "{% csrf_token %}" in "submit.html" form.
 
-# FLAW 5: Broken Authentication -vulnerability.
-# @login_required
-# FIX for Broken Authentication -vulnerability: Uncomment "@login_required"
-# decorator.
+@login_required
 def submit_message(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -45,6 +42,12 @@ def submit_message(request):
         Message.objects.create(
             name=name, email=email, content=content, is_public=is_public
         )
+
+        # FLAW 5: Injection -vulnerability.
+        subprocess.call(f"echo {name}", shell=True)
+        # FIX for Injection -vulnerability: remove subprocess.call from the code
+        # and preferrably use print for debugging inputs:
+        # print("User input from:", name)
 
         return redirect("index")
     return render(request, "guestbook/submit.html")

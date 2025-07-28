@@ -85,15 +85,17 @@ Remove the @csrf_exempt decorator from "views.py" AND ALSO add "{% csrf_token %}
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-4-after-1.png
 
 
-FLAW 5: Broken Authentication
-LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L34
+FLAW 5: Injection
+LINK: https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/views.py#L46
 
 Description of flaw 5:
-A @login_required decorator has been left out from the method submit_message(request) in "views.py". This allows anyone to access /guestbook/submit/submit.html to send messages without having to login to the site. Follow the link below to see a picture of the situation:
+Developer has used 'subprocess.call' for debugging user input with direct shell access, which allows running any code in the command prompt. Follow the links below to see pictures of the situation, where 'testdir' is deleted via windows command prompt (for Linux the attacker could use for example 'John; rm -rf ./testdir'):
 
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-5-before-1.png
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-5-before-2.png
+https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-5-before-3.png
 
 How to fix it:
-Add/uncomment the @login_required decorator in the method submit_message(request) in "views.py". This way you have to login to the site before you can send messages. The result can be seen in a picture following the link below:
+Remove subprocess.call from the code and preferrably use for example 'print' for debugging inputs. The result can be seen in the picture following the links below, where only valid debug print is seen ("User input from: Mick & rmdir /s /q testdir") and 'testdir' stil exists:
 
 https://github.com/jtpcode/CyberSecurity/blob/main/guestbook/screenshots/flaw-5-after-1.png
